@@ -12,6 +12,6 @@ RUN sed -i 's/archive.ubuntu.com/mirrors.ustc.edu.cn/g' /etc/apt/sources.list \
 #ADD authorized_keys /root/.ssh/authorized_keys
 #ADD run.sh /run.sh
 #RUN chmod 755 /run.sh
-#ENV PORT=22
+ENV PORT=22
 EXPOSE 22
 CMD /usr/sbin/sshd -D
