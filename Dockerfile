@@ -1,43 +1,17 @@
-# Start from the code-server Debian base image
-#FROM codercom/code-server:latest
-FROM ubuntu:20.04
+FROM ubuntu
 
-#USER peng
-
-# Apply VS Code settings
-#COPY deploy-container/settings.json .local/share/code-server/User/settings.json
-
-# Use bash shell
-ENV SHELL=/bin/bash
-
-# Install unzip + rclone (support for remote filesystem)
+#ENV SHELL=/bin/bash
+RUN sed -i 's/archive.ubuntu.com/mirrors.ustc.edu.cn/g' /etc/apt/sources.list
 RUN apt-get update
 RUN apt-get install openssh-server -y
-RUN service ssh start
-# Copy rclone tasks to /tmp, to potentially be used
-#COPY deploy-container/rclone-tasks.json /tmp/rclone-tasks.json
-
-# Fix permissions for code-server
-#RUN sudo chown -R coder:coder /home/coder/.local
-
-# You can add custom software and dependencies for your environment below
-# -----------
-
-# Install a VS Code extension:
-# Note: we use a different marketplace than VS Code. See https://github.com/cdr/code-server/blob/main/docs/FAQ.md#differences-compared-to-vs-code
-# RUN code-server --install-extension esbenp.prettier-vscode
-
-# Install apt packages:
-# RUN sudo apt-get install -y ubuntu-make
-
-# Copy files:
-# COPY deploy-container/myTool /home/coder/myTool
-
-# -----------
-
-# Port
+RUN mkdir -p /var/run/sshd
+RUN mkdir -p /root/.ssh
+RUN echo "root:123456" | chpasswd
+RUN sed -ri 's/^PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
+RUN sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config
+#ADD authorized_keys /root/.ssh/authorized_keys
+#ADD run.sh /run.sh
+#RUN chmod 755 /run.sh
 ENV PORT=22
-
-# Use our custom entrypoint script first
-#COPY deploy-container/entrypoint.sh /usr/bin/deploy-container-entrypoint.sh
-#ENTRYPOINT ["/usr/bin/deploy-container-entrypoint.sh"]
+EXPOSE 22
+CMD /usr/sbin/sshd -D
