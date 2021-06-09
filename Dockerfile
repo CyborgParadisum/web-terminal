@@ -11,8 +11,8 @@ FROM ubuntu:20.04
 ENV SHELL=/bin/bash
 
 # Install unzip + rclone (support for remote filesystem)
-RUN apt-get update &&
- apt-get install openssh-server -y
+RUN apt-get update
+RUN apt-get install openssh-server -y
 RUN service ssh start
 # Copy rclone tasks to /tmp, to potentially be used
 #COPY deploy-container/rclone-tasks.json /tmp/rclone-tasks.json
