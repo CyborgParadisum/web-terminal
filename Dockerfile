@@ -2,7 +2,7 @@
 #FROM codercom/code-server:latest
 FROM ubuntu:20.04
 
-USER peng
+#USER peng
 
 # Apply VS Code settings
 #COPY deploy-container/settings.json .local/share/code-server/User/settings.json
