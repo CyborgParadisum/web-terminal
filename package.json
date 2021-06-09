@@ -50,7 +50,6 @@
         "JavaScript",
         "REPL"
     ],
-    "preferGlobal": "false",
     "bin": {
         "web-terminal": "./bin/run.js"
     },
@@ -66,5 +65,7 @@
         "type": "MIT",
         "url": "http://github.com/rabchev/web-terminal/blob/master/LICENSE"
     },
-    "engines": { "node": ">=0.10" }
+    "engines": {
+        "node": ">=0.10"
+    }
 }
