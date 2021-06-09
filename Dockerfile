@@ -9,10 +9,11 @@ RUN sed -i 's/archive.ubuntu.com/mirrors.ustc.edu.cn/g' /etc/apt/sources.list \
     && echo "root:123456" | chpasswd \
     && sed -ri 's/[#]PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config \
     && echo "PermitRootLogin yes" >> /etc/ssh/sshd_config \
+    && echo "Port 2222" >> /etc/ssh/sshd_config \
     &&  sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config
 #ADD authorized_keys /root/.ssh/authorized_keys
 #ADD run.sh /run.sh
 #RUN chmod 755 /run.sh
-ENV PORT=22
-EXPOSE 22
+ENV PORT=2222
+EXPOSE 2222
 CMD /usr/sbin/sshd -D
